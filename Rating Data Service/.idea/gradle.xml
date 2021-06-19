@@ -5,11 +5,11 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/Movie-Info-Service" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Rating-Data-Service" />
         <option name="gradleJvm" value="15" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/Movie-Info-Service" />
+            <option value="$PROJECT_DIR$/Rating-Data-Service" />
           </set>
         </option>
       </GradleProjectSettings>
