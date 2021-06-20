@@ -3,6 +3,7 @@ package com.example.Movie.Catalog.Service
 import com.example.Movie.Catalog.Service.models.CatalogItem
 import com.example.Movie.Catalog.Service.models.Movie
 import com.example.Movie.Catalog.Service.models.Rating
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,11 +16,17 @@ import java.util.stream.Collectors
 @RequestMapping("/catalog")
 class MovieCatalogResource {
 
+
+    var restTemplate:RestTemplate;
+    @Autowired
+    constructor(_restTemplate:RestTemplate){
+        restTemplate = _restTemplate;
+    }
     @GetMapping("/{userId}")
     fun getCatalog(@PathVariable userId:String):List<CatalogItem>{
 
         // rest template is used to call other API
-        var restTemplate:RestTemplate = RestTemplate();
+
 
 
 
@@ -32,7 +39,7 @@ class MovieCatalogResource {
         return ratings.stream().map{
                 rating  ->
 
-            var movie: Movie? = restTemplate.getForObject("http://localhost:8081/movies/" + rating.movieId, Movie::class.java);
+            var movie: Movie? = this.restTemplate.getForObject("http://localhost:8081/movies/" + rating.movieId, Movie::class.java);
             var movieName = "";
             if(movie!=null){
                 movieName = movie.name;
