@@ -22,7 +22,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.0.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
