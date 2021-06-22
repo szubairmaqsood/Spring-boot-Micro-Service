@@ -12,4 +12,6 @@ class MovieResource {
     fun getMovieInfo(@PathVariable movieId:String): Movie {
         return Movie(movieId,"Test Name");
     }
+
+
 }
