@@ -4,6 +4,7 @@ import com.example.Movie.Catalog.Service.models.CatalogItem
 import com.example.Movie.Catalog.Service.models.Movie
 import com.example.Movie.Catalog.Service.models.Rating
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Bean
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,21 +17,21 @@ import java.util.stream.Collectors
 @RequestMapping("/catalog")
 class MovieCatalogResource {
 
-
     var restTemplate:RestTemplate;
     @Autowired
-    constructor(_restTemplate:RestTemplate){
-        restTemplate = _restTemplate;
+    constructor(){
+        restTemplate =RestTemplate();
     }
+
+
+
+
     @GetMapping("/{userId}")
     fun getCatalog(@PathVariable userId:String):List<CatalogItem>{
 
-        // rest template is used to call other API
 
 
-
-
-       // First we make a temparory array of ratings
+        // First we make a temparory array of ratings
        var ratings:ArrayList<Rating> = ArrayList<Rating>();
         ratings.add(Rating("1234",4));
         ratings.add(Rating("5678",3));
@@ -40,6 +41,16 @@ class MovieCatalogResource {
                 rating  ->
 
             var movie: Movie? = this.restTemplate.getForObject("http://localhost:8081/movies/" + rating.movieId, Movie::class.java);
+            /*
+            var movie: Movie = this.webClientBuilder.build()
+                               .get()
+                               .uri("http://localhost:8081/movies/" + rating.movieId)
+                               .retriver()
+                               .bodyToMono( Movie::class.java)
+                               .block();
+
+             */
+
             var movieName = "";
             if(movie!=null){
                 movieName = movie.name;
