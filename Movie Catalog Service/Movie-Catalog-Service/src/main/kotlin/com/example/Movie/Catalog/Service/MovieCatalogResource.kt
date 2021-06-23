@@ -36,7 +36,7 @@ class MovieCatalogResource {
     @GetMapping("/{userId}")
     fun getCatalog(@PathVariable userId:String):MutableList<CatalogItem>?{
 
-        var ratings:UserRating? = this.restTemplate.getForObject("http://rating-data-service/ratingsdata/users/" + userId, UserRating::class.java);
+        var ratings:UserRating? = this.restTemplate.getForObject("http://localhost:8082/ratingsdata/users/" + userId, UserRating::class.java);
 
 
 
@@ -45,7 +45,7 @@ class MovieCatalogResource {
         return ratings?.userRating?.stream()?.map{
                 rating  ->
             // For each movie Id, call move info service and get details
-            var movie: Movie? = this.restTemplate.getForObject("http://movie-info-service/movies/" + rating.movieId, Movie::class.java);
+            var movie: Movie? = this.restTemplate.getForObject("http://localhost:8081/movies/"  + rating.movieId, Movie::class.java);
             /*
             var movie: Movie = this.webClientBuilder.build()
                                .get()
