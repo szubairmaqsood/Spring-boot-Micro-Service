@@ -5,6 +5,7 @@ import com.example.Movie.Catalog.Service.models.Movie
 import com.example.Movie.Catalog.Service.models.Rating
 import com.example.Movie.Catalog.Service.models.UserRating
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cloud.client.loadbalancer.LoadBalanced
 import org.springframework.context.annotation.Bean
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -18,11 +19,16 @@ import java.util.stream.Collectors
 @RequestMapping("/catalog")
 class MovieCatalogResource {
 
+
     var restTemplate:RestTemplate;
-    @Autowired
+
+
+
+
     constructor(){
-        restTemplate =RestTemplate();
+        restTemplate = RestTemplate();
     }
+
 
 
 
@@ -30,7 +36,7 @@ class MovieCatalogResource {
     @GetMapping("/{userId}")
     fun getCatalog(@PathVariable userId:String):MutableList<CatalogItem>?{
 
-        var ratings:UserRating? = this.restTemplate.getForObject("http://localhost:8082/ratingsdata/users/" + userId, UserRating::class.java);
+        var ratings:UserRating? = this.restTemplate.getForObject("http://rating-data-service/ratingsdata/users/" + userId, UserRating::class.java);
 
 
 
@@ -39,7 +45,7 @@ class MovieCatalogResource {
         return ratings?.userRating?.stream()?.map{
                 rating  ->
             // For each movie Id, call move info service and get details
-            var movie: Movie? = this.restTemplate.getForObject("http://localhost:8081/movies/" + rating.movieId, Movie::class.java);
+            var movie: Movie? = this.restTemplate.getForObject("http://movie-info-service/movies/" + rating.movieId, Movie::class.java);
             /*
             var movie: Movie = this.webClientBuilder.build()
                                .get()
